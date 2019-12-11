@@ -18,6 +18,8 @@ import Bar from '../Bar';
 
 import Router from '../Router';
 import DialogHost from '../DialogHost';
+import InstallPWA from "../utility/InstallPWA";
+import moment from 'moment';
 
 class App extends Component {
   constructor(props) {
@@ -192,22 +194,41 @@ class App extends Component {
   };
 
   updateReadySnackbar = () => {
-    let refreshing;
-    let promptSnackbar = this.openSnackbar;
-    window.navigator.serviceWorker.addEventListener('controllerchange', function () {
-      if (refreshing) return;
-      // window.location.reload();
-
-      promptSnackbar('Opdaterer til nyeste version')
-      console.log('NEJ')
-      console.log('NEJ')
-      console.log('NEJ')
-
-      refreshing = true;
-    });
+    if ('serviceWorker' in navigator) {
+      let refreshing;
+      window.navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        // window.location.reload();
+        refreshing = true;
+        return fireUpdatePrompt();
+      });
+      const fireUpdatePrompt = () => this.openSnackbar('Opdaterer til nyeste version');
+    }
   }
 
-  render() {
+  iosA2HSPrompt = () => {
+    if (navigator.standalone) {
+      return false;
+    }
+
+    let today = moment().toDate();
+    let lastPrompt = moment(localStorage.getItem("installPrompt"));
+    let days = moment(today).diff(lastPrompt, "days");
+
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.platform)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+
+    let isApple = ['iPhone', 'iPad', 'iPod'].includes(window.navigator.platform) || isIOS;
+
+    let prompt = (isNaN(days) || days > 30) && isApple;
+
+    if (isApple && "localStorage" in window) {
+      localStorage.setItem("installPrompt", today);
+    }
+    return prompt && <InstallPWA />
+  }
+
+  render(props) {
     const {
       user,
       userData,
@@ -230,6 +251,10 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
+
+        {/* A2HS */}
+        {this.iosA2HSPrompt()}
+        {/* A2HS */}
 
         {!ready &&
           <LaunchScreen />
@@ -513,7 +538,6 @@ class App extends Component {
       });
     });
     this.updateReadySnackbar();
-
   }
 
   componentWillUnmount() {

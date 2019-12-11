@@ -32,6 +32,7 @@ if ('function' === typeof importScripts) {
       /public\/(.*)/,
       new workbox.strategies.NetworkFirst())
 
+      
     /* custom cache rules*/
     // workbox.routing.registerNavigationRoute('/index.html', {
     //   whitelist: 

@@ -184,7 +184,8 @@ class SignUpDialog extends Component {
     const emailAddress = event.target.value;
 
     this.setState({
-      emailAddress: emailAddress
+      emailAddress: emailAddress,
+      emailAddressConfirmation: emailAddress,
     });
   };
 
@@ -200,7 +201,8 @@ class SignUpDialog extends Component {
     const password = event.target.value;
 
     this.setState({
-      password: password
+      password: password,
+      passwordConfirmation: password
     });
   };
 
@@ -256,14 +258,14 @@ class SignUpDialog extends Component {
                     />
                   </Grid>
 
-                  <Grid item xs>
+                  {/* <Grid item xs>
                     <TextField
                       autoComplete="email"
                       disabled={performingAction}
                       error={!!(errors && errors.emailAddressConfirmation)}
                       fullWidth
                       helperText={(errors && errors.emailAddressConfirmation) ? errors.emailAddressConfirmation[0] : ''}
-                      label="E-mailadresse bekræftelse"
+                      label="E-mail adresse bekræftelse"
                       placeholder="john@madsen.dk"
                       required
                       type="email"
@@ -272,7 +274,7 @@ class SignUpDialog extends Component {
 
                       onChange={this.handleEmailAddressConfirmationChange}
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item xs>
                     <TextField
@@ -292,7 +294,7 @@ class SignUpDialog extends Component {
                     />
                   </Grid>
 
-                  <Grid item xs>
+                  {/* <Grid item xs>
                     <TextField
                       autoComplete="password"
                       disabled={performingAction}
@@ -308,7 +310,7 @@ class SignUpDialog extends Component {
 
                       onChange={this.handlePasswordConfirmationChange}
                     />
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
             </Grid>
@@ -336,7 +338,7 @@ class SignUpDialog extends Component {
                 />
               </Grid>
 
-              <Grid item xs>
+              {/* <Grid item xs>
                 <TextField
                   autoComplete="email"
                   disabled={performingAction}
@@ -352,7 +354,7 @@ class SignUpDialog extends Component {
 
                   onChange={this.handleEmailAddressConfirmationChange}
                 />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs>
                 <TextField
@@ -361,7 +363,7 @@ class SignUpDialog extends Component {
                   error={!!(errors && errors.password)}
                   fullWidth
                   helperText={(errors && errors.password) ? errors.password[0] : ''}
-                  label="Password"
+                  label="Kodeord"
                   placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                   required
                   type="password"
@@ -372,14 +374,14 @@ class SignUpDialog extends Component {
                 />
               </Grid>
 
-              <Grid item xs>
+              {/* <Grid item xs>
                 <TextField
                   autoComplete="password"
                   disabled={performingAction}
                   error={!!(errors && errors.passwordConfirmation)}
                   fullWidth
                   helperText={(errors && errors.passwordConfirmation) ? errors.passwordConfirmation[0] : ''}
-                  label="Password bekræftelse"
+                  label="Kodeord bekræftelse"
                   placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                   required
                   type="password"
@@ -388,7 +390,7 @@ class SignUpDialog extends Component {
 
                   onChange={this.handlePasswordConfirmationChange}
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </DialogContent>
         </Hidden>

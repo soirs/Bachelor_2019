@@ -114,7 +114,7 @@ class Bar extends Component {
     return (
       <AppBar color="primary" style={barStyle} position="static">
         <Toolbar variant="regular">
-        <img src={Logo} alt='DR LOGO' style={imgStyle} />
+        <img src={Logo} alt='DR LOGO' style={imgStyle} onClick={() => window.location.reload()} />
           <Box display="flex" flexGrow={1} style={boxStyle}>
           </Box>
 

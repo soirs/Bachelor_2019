@@ -1,4 +1,4 @@
-import firebase, { analytics, auth, firestore, storage } from '../firebase';
+import firebase, { auth, firestore, storage } from '../firebase';
 
 import moment from 'moment';
 
@@ -46,12 +46,14 @@ authentication.updateEstate = (estateValue) => {
 
     reference.update({
       estateValue: estateValue
-    }).then((value) => {
-      analytics.logEvent('change_estateValue');
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+    })
+      .then((value) => {
+        // analytics.logEvent('change_estateValue');
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 authentication.updateImprovement = (improvementValue) => {
@@ -88,12 +90,14 @@ authentication.updateImprovement = (improvementValue) => {
 
     reference.update({
       improvementValue: improvementValue
-    }).then((value) => {
-      analytics.logEvent('change_improvementValue');
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+    })
+      .then((value) => {
+        // analytics.logEvent('change_improvementValue');
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 authentication.updateSlider = (sliderValue) => {
@@ -130,12 +134,14 @@ authentication.updateSlider = (sliderValue) => {
 
     reference.update({
       sliderValue: sliderValue
-    }).then((value) => {
-      analytics.logEvent('change_sliderValue');
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+    })
+      .then((value) => {
+        // analytics.logEvent('change_sliderValue');
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 authentication.updateForm = (formValue) => {
@@ -172,12 +178,14 @@ authentication.updateForm = (formValue) => {
 
     reference.update({
       formValue: formValue
-    }).then((value) => {
-      analytics.logEvent('change_sliderValue');
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+    })
+      .then((value) => {
+        // analytics.logEvent('change_sliderValue');
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 
@@ -248,15 +256,17 @@ authentication.signUp = (fields) => {
         firstName: firstName,
         lastName: lastName,
         username: username
-      }).then((value) => {
-        analytics.logEvent('sign_up', {
-          method: 'password'
-        });
+      })
+        .then((value) => {
+          // analytics.logEvent('sign_up', {
+          //   method: 'password'
+          // });
 
-        resolve(value);
-      }).catch((reason) => {
-        reject(reason);
-      });
+          resolve(value);
+        })
+        .catch((reason) => {
+          reject(reason);
+        });
     }).catch((reason) => {
       reject(reason);
     });
@@ -280,42 +290,44 @@ authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
     }
 
     auth.createUserWithEmailAndPassword(emailAddress, password)
-    .then((value) => {
-      const user = value.user;
+      .then((value) => {
+        const user = value.user;
 
-      if (!user) {
-        reject();
+        if (!user) {
+          reject();
 
-        return;
-      }
+          return;
+        }
 
-      const uid = user.uid;
+        const uid = user.uid;
 
-      if (!uid) {
-        reject();
+        if (!uid) {
+          reject();
 
-        return;
-      }
-      const reference = firestore.collection('users').doc(uid);
+          return;
+        }
+        const reference = firestore.collection('users').doc(uid);
 
-      if (!reference) {
-        reject();
+        if (!reference) {
+          reject();
 
-        return;
-      }
+          return;
+        }
 
-      reference.set({}, { merge: true }).then((value) => {
-        analytics.logEvent('sign_up', {
-          method: 'password'
-        });
+        reference.set({}, { merge: true })
+          .then((value) => {
+            // analytics.logEvent('sign_up', {
+            //   method: 'password'
+            // });
 
-        resolve(value);
+            resolve(value);
+          })
+          .catch((reason) => {
+            reject(reason);
+          });
       }).catch((reason) => {
         reject(reason);
       });
-    }).catch((reason) => {
-      reject(reason);
-    });
   });
 };
 
@@ -336,55 +348,56 @@ authentication.signIn = (emailAddress, password) => {
     }
 
     auth.signInWithEmailAndPassword(emailAddress, password)
-    .then((value) => {
-      const user = value.user;
+      .then((value) => {
+        const user = value.user;
 
-      if (!user) {
-        reject();
+        if (!user) {
+          reject();
 
-        return;
-      }
-
-      const uid = user.uid;
-
-      if (!uid) {
-        reject();
-
-        return;
-      }
-
-      const reference = firestore.collection('users').doc(uid);
-
-      if (!reference) {
-        reject();
-
-        return;
-      }
-
-      reference.get({ source: 'server' }).then((value) => {
-        if (value.exists) {
-          analytics.logEvent('login', {
-            method: 'password'
-          });
-
-          resolve(user);
-        } else {
-          reference.set({}, { merge: true }).then((value) => {
-            analytics.logEvent('login', {
-              method: 'password'
-            });
-
-            resolve(user);
-          }).catch((reason) => {
-            reject(reason);
-          });
+          return;
         }
-      }).catch((reason => {
+
+        const uid = user.uid;
+
+        if (!uid) {
+          reject();
+
+          return;
+        }
+
+        const reference = firestore.collection('users').doc(uid);
+
+        if (!reference) {
+          reject();
+
+          return;
+        }
+
+        reference.get({ source: 'server' })
+          .then((value) => {
+            if (value.exists) {
+              // analytics.logEvent('login', {
+              //   method: 'password'
+              // });
+
+              resolve(user);
+            } else {
+              reference.set({}, { merge: true }).then((value) => {
+                // analytics.logEvent('login', {
+                //   method: 'password'
+                // });
+
+                resolve(user);
+              }).catch((reason) => {
+                reject(reason);
+              });
+            }
+          }).catch((reason => {
+            reject(reason);
+          }));
+      }).catch((reason) => {
         reject(reason);
-      }));
-    }).catch((reason) => {
-      reject(reason);
-    });
+      });
   });
 };
 
@@ -439,16 +452,16 @@ authentication.signInWithAuthProvider = (providerId) => {
 
       reference.get({ source: 'server' }).then((value) => {
         if (value.exists) {
-          analytics.logEvent('login', {
-            method: providerId
-          });
+          // analytics.logEvent('login', {
+          //   method: providerId
+          // });
 
           resolve(user);
         } else {
           reference.set({}, { merge: true }).then((value) => {
-            analytics.logEvent('login', {
-              method: providerId
-            });
+            // analytics.logEvent('login', {
+            //   method: providerId
+            // });
 
             resolve(user);
           }).catch((reason) => {
@@ -488,15 +501,17 @@ authentication.linkAuthProvider = (providerId) => {
       return;
     }
 
-    currentUser.linkWithPopup(provider).then((value) => {
-      analytics.logEvent('link_auth_provider', {
-        value: providerId
-      });
+    currentUser.linkWithPopup(provider)
+      .then((value) => {
+        // analytics.logEvent('link_auth_provider', {
+        //   value: providerId
+        // });
 
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 
@@ -516,15 +531,17 @@ authentication.unlinkAuthProvider = (providerId) => {
       return;
     }
 
-    currentUser.unlink(providerId).then((value) => {
-      analytics.logEvent('unlink_auth_provider', {
-        value: providerId
-      });
+    currentUser.unlink(providerId)
+      .then((value) => {
+        // analytics.logEvent('unlink_auth_provider', {
+        //   value: providerId
+        // });
 
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 
@@ -558,13 +575,15 @@ authentication.signOut = () => {
       return;
     }
 
-    auth.signOut().then((value) => {
-      analytics.logEvent('sign_out');
+    auth.signOut()
+      .then((value) => {
+        // analytics.logEvent('sign_out');
 
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 
@@ -584,13 +603,15 @@ authentication.resetPassword = (emailAddress) => {
       return;
     }
 
-    auth.sendPasswordResetEmail(emailAddress).then((value) => {
-      analytics.logEvent('reset_password');
+    auth.sendPasswordResetEmail(emailAddress)
+      .then((value) => {
+        // analytics.logEvent('reset_password');
 
-      resolve(value);
-    }).catch((reason) => {
-      reject(reason);
-    });
+        resolve(value);
+      })
+      .catch((reason) => {
+        reject(reason);
+      });
   });
 };
 
@@ -642,13 +663,15 @@ authentication.changeAvatar = (avatar) => {
       reference.getDownloadURL().then((value) => {
         currentUser.updateProfile({
           photoURL: value
-        }).then((value) => {
-          analytics.logEvent('change_avatar');
+        })
+          .then((value) => {
+            // analytics.logEvent('change_avatar');
 
-          resolve(value);
-        }).catch((reason) => {
-          reject(reason);
-        });
+            resolve(value);
+          })
+          .catch((reason) => {
+            reject(reason);
+          });
       }).catch((reason) => {
         reject(reason);
       });
@@ -688,7 +711,7 @@ authentication.removeAvatar = () => {
       }
 
       reference.delete().then((value) => {
-        analytics.logEvent('remove_avatar');
+        // analytics.logEvent('remove_avatar');
 
         resolve(value);
       }).catch((reason) => {
@@ -735,7 +758,7 @@ authentication.changeFirstName = (firstName) => {
     reference.update({
       firstName: firstName
     }).then((value) => {
-      analytics.logEvent('change_first_name');
+      // analytics.logEvent('change_first_name');
 
       resolve(value);
     }).catch((reason) => {
@@ -779,7 +802,7 @@ authentication.changeLastName = (lastName) => {
     reference.update({
       lastName: lastName
     }).then((value) => {
-      analytics.logEvent('change_last_name');
+      // analytics.logEvent('change_last_name');
 
       resolve(value);
     }).catch((reason) => {
@@ -823,7 +846,7 @@ authentication.changeUsername = (username) => {
     reference.update({
       username: username
     }).then((value) => {
-      analytics.logEvent('change_username');
+      // analytics.logEvent('change_username');
 
       resolve(value);
     }).catch((reason) => {
@@ -857,7 +880,7 @@ authentication.changeEmailAddress = (emailAddress) => {
     }
 
     currentUser.updateEmail(emailAddress).then((value) => {
-      analytics.logEvent('change_email_address');
+      // analytics.logEvent('change_email_address');
 
       resolve(value);
     }).catch((reason) => {
@@ -902,7 +925,7 @@ authentication.changePassword = (password) => {
       reference.update({
         lastPasswordChange: firebase.firestore.FieldValue.serverTimestamp()
       }).then((value) => {
-        analytics.logEvent('change_password');
+        // analytics.logEvent('change_password');
 
         resolve(value);
       }).catch((reason) => {
@@ -925,7 +948,7 @@ authentication.verifyEmailAddress = () => {
     }
 
     currentUser.sendEmailVerification().then((value) => {
-      analytics.logEvent('verify_email_address');
+      // analytics.logEvent('verify_email_address');
 
       resolve(value);
     }).catch((reason) => {
@@ -945,7 +968,7 @@ authentication.deleteAccount = () => {
     }
 
     currentUser.delete().then((value) => {
-      analytics.logEvent('delete_account');
+      // analytics.logEvent('delete_account');
 
       resolve(value);
     }).catch((reason) => {

@@ -6,7 +6,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import HomeContent from '../HomeContent';
 import NotFoundContent from '../NotFoundContent';
-import Login from '../Login';
 // import Boligudlejning from '../Boligudlejning';
 
 class Router extends Component {
@@ -19,20 +18,19 @@ class Router extends Component {
         <Switch>
 
           <Route path="/" exact>
-            <HomeContent user={user} userData={userData}
+            <HomeContent
+              user={user}
+              userData={userData}
               performingAction={performingAction}
               openSnackbar={openSnackbar}
               onSignUpClick={onSignUpClick}
               {...props} />
           </Route>
-{/* 
+          {/* 
           <Route path='/Boligudlejning' exact>
             <Boligudlejning user={user} performingAction={performingAction} openSnackbar={openSnackbar} {...props} />
           </Route>
  */}
-          <Route path='/Login' exact>
-          <Login user={user} {...props} />
-        </Route>
 
           <Route>
             <NotFoundContent />

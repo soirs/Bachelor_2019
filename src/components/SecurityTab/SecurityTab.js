@@ -230,7 +230,7 @@ class SecurityTab extends Component {
                 error={!!(errors && errors.password)}
                 fullWidth
                 helperText={(errors && errors.password) ? errors.password[0] : 'Press Enter to change your password'}
-                label="Password"
+                label="Kodeord"
                 required
                 type="password"
                 value={password}
@@ -251,7 +251,7 @@ class SecurityTab extends Component {
                 error={!!(errors && errors.passwordConfirmation)}
                 fullWidth
                 helperText={(errors && errors.passwordConfirmation) ? errors.passwordConfirmation[0] : 'Press Enter to change your password'}
-                label="Password confirmation"
+                label="Kodeord bekræftelse"
                 required
                 type="password"
                 value={passwordConfirmation}

@@ -2,6 +2,7 @@
   "name": "dr-bachelor",
   "version": "2.1.2",
   "private": true,
+  "homepage": "https://bachelor-a5b49.firebaseapp.com/",
   "dependencies": {
     "@material-ui/core": "^4.7.1",
     "@material-ui/icons": "^4.5.1",

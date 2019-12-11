@@ -23,6 +23,12 @@ const styles = (theme) => ({
     padding: '1vh 1.5vh'
   },
 
+  a2hs: {
+    marginTop: '5vh',
+    padding: '1vh 1.5vh'
+  },
+
+
   buttonIcon: {
     marginRight: theme.spacing(1)
   }
@@ -30,6 +36,37 @@ const styles = (theme) => ({
 
 
 class HomeContent extends Component {
+  installPrompt = null;
+  componentDidMount() {
+    console.log("Listening for Install prompt");
+    window.addEventListener('beforeinstallprompt', e => {
+      // For older browsers
+      e.preventDefault();
+      console.log("Install Prompt fired");
+      this.installPrompt = e;
+      console.log('this.installPrompt :', this.installPrompt);
+      // See if the app is already installed, in that case, do nothing.
+      if ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true) {
+        return false;
+      }
+    })
+  }
+  installApp = async () => {
+    if (!this.installPrompt) { return false }
+    this.installPrompt.prompt();
+
+    let outcome = await this.installPrompt.userChoice;
+    // eslint-disable-next-line eqeqeq
+    if (outcome.outcome == 'accepted') {
+      console.log("PWA setup accepted")
+    }
+    else {
+      console.log("PWA setup rejected");
+    }
+    // Remove the event reference
+    this.installPrompt = null;
+  }
+
   render() {
     // Events
     const { onSignUpClick, performingAction, openSnackbar, userData } = this.props;
@@ -39,16 +76,19 @@ class HomeContent extends Component {
 
     // Properties
     const { user } = this.props;
-    
+
     const imgStyle = {
       maxWidth: '100px',
       textAlign: 'center',
       cursor: 'pointer'
     };
 
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.platform)
+      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+
     if (user) {
       return (
-        <Boligudlejning user={user} userData={userData} openSnackbar={openSnackbar}/>
+        <Boligudlejning user={user} userData={userData} openSnackbar={openSnackbar} />
       );
     }
     return (
@@ -61,6 +101,12 @@ class HomeContent extends Component {
         button={
           <Button className={classes.button} disabled={performingAction} variant="contained" onClick={onSignUpClick}>
             Opret bruger
+          </Button>
+        }
+        a2hsBtn={
+          !isIOS &&
+          <Button className={classes.a2hs} color='secondary' disabled={performingAction} variant="contained" onClick={this.installApp}>
+            Download app
           </Button>
         }
       />

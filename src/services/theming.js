@@ -22,7 +22,7 @@ import brown from '@material-ui/core/colors/brown';
 import gray from '@material-ui/core/colors/grey';
 import blueGray from '@material-ui/core/colors/blueGrey';
 
-import firebase, { analytics, auth, firestore } from '../firebase';
+import firebase, { auth, firestore } from '../firebase';
 
 const colors = {
   red: {
@@ -352,17 +352,19 @@ theming.changeTheme = (theme) => {
         secondaryColor: secondaryColor.id,
         type: type.id
       }
-    }).then((value) => {
-      analytics.logEvent('change_theme', {
-        value: {
-          primaryColor: primaryColor.id,
-          secondaryColor: secondaryColor.id,
-          type: type.id
-        }
-      });
+    })
+    // .then((value) => {
+    //   analytics.logEvent('change_theme', {
+    //     value: {
+    //       primaryColor: primaryColor.id,
+    //       secondaryColor: secondaryColor.id,
+    //       type: type.id
+    //     }
+    //   });
 
-      resolve(value);
-    }).catch((reason) => {
+    //   resolve(value);
+    // })
+    .catch((reason) => {
       reject(reason);
     });
   });
@@ -415,13 +417,15 @@ theming.changePrimaryColor = (primaryColor) => {
 
     reference.update({
       'theme.primaryColor': primaryColor.id
-    }).then((value) => {
-      analytics.logEvent('change_primary_color', {
-        value: primaryColor.id
-      });
+    })
+    // .then((value) => {
+    //   analytics.logEvent('change_primary_color', {
+    //     value: primaryColor.id
+    //   });
 
-      resolve(value);
-    }).catch((reason) => {
+    //   resolve(value);
+    // })
+    .catch((reason) => {
       reject(reason);
     });
   });
@@ -474,13 +478,15 @@ theming.changeSecondaryColor = (secondaryColor) => {
 
     reference.update({
       'theme.secondaryColor': secondaryColor.id
-    }).then((value) => {
-      analytics.logEvent('change_secondary_color', {
-        value: secondaryColor.id
-      });
+    })
+    // .then((value) => {
+    //   analytics.logEvent('change_secondary_color', {
+    //     value: secondaryColor.id
+    //   });
 
-      resolve(value);
-    }).catch((reason) => {
+    //   resolve(value);
+    // })
+    .catch((reason) => {
       reject(reason);
     });
   });
@@ -533,13 +539,15 @@ theming.changeType = (type) => {
 
     reference.update({
       'theme.type': type.id
-    }).then((value) => {
-      analytics.logEvent('change_type', {
-        value: type.id
-      });
+    })
+    // .then((value) => {
+    //   analytics.logEvent('change_type', {
+    //     value: type.id
+    //   });
 
-      resolve(value);
-    }).catch((reason) => {
+    //   resolve(value);
+    // })
+    .catch((reason) => {
       reject(reason);
     });
   });
@@ -577,11 +585,13 @@ theming.resetTheme = () => {
 
     reference.update({
       theme: firebase.firestore.FieldValue.delete()
-    }).then((value) => {
-      analytics.logEvent('reset_theme');
+    })
+    // .then((value) => {
+    //   analytics.logEvent('reset_theme');
 
-      resolve(value);
-    }).catch((reason) => {
+    //   resolve(value);
+    // })
+    .catch((reason) => {
       reject(reason);
     });
   });
