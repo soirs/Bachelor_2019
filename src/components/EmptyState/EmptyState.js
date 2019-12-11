@@ -13,6 +13,10 @@ const styles = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     textAlign: 'center'
+  },
+  title: {
+    fontFamily: 'Dosis, Lato, SansSerif',
+    fontWeight: '600'
   }
 };
 
@@ -27,7 +31,7 @@ class EmptyState extends Component {
     return (
       <div className={classes.center}>
         {icon}
-        {title && <Typography color="textSecondary" variant="h4">{title}</Typography>}
+        {title && <Typography className={classes.title} color="textSecondary" variant="h4" mt='2'>{title}</Typography>}
         {description && <Typography color="textSecondary" variant="subtitle1" gutterBottom>{description}</Typography>}
         {button}
       </div>

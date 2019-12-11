@@ -146,7 +146,7 @@ class App extends Component {
     }, () => {
       authentication.signOut().then(() => {
         this.closeAllDialogs(() => {
-          this.openSnackbar('Signed out');
+          this.openSnackbar('Logget ud');
         });
       }).catch((reason) => {
         const code = reason.code;
@@ -169,6 +169,7 @@ class App extends Component {
     this.setState({
       snackbar: {
         autoHideDuration: readingTime(message).time * autoHideDuration,
+        // autoHideDuration: 2 * autoHideDuration,
         message,
         open: true
       }
@@ -189,6 +190,22 @@ class App extends Component {
       }
     });
   };
+
+  updateReadySnackbar = () => {
+    let refreshing;
+    let promptSnackbar = this.openSnackbar;
+    window.navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (refreshing) return;
+      // window.location.reload();
+
+      promptSnackbar('Opdaterer til nyeste version')
+      console.log('NEJ')
+      console.log('NEJ')
+      console.log('NEJ')
+
+      refreshing = true;
+    });
+  }
 
   render() {
     const {
@@ -226,8 +243,6 @@ class App extends Component {
               user={user}
               userData={userData}
 
-              onTitleClick={() => this.openDialog('aboutDialog')}
-
               onSignUpClick={() => this.openDialog('signUpDialog')}
               onSignInClick={() => this.openDialog('signInDialog')}
 
@@ -235,7 +250,16 @@ class App extends Component {
               onSignOutClick={() => this.openDialog('signOutDialog')}
             />
 
-            <Router user={user} />
+            <Router
+              performingAction={performingAction}
+
+              user={user}
+              userData={userData}
+              openSnackbar={this.openSnackbar}
+
+              // For <HomeContent/>
+              onSignUpClick={() => this.openDialog('signUpDialog')}
+            />
 
             <DialogHost
               user={user}
@@ -334,10 +358,10 @@ class App extends Component {
                     },
 
                     props: {
-                      title: 'Sign out?',
-                      contentText: 'While signed out you are unable to manage your profile and conduct other activities that require you to be signed in.',
-                      dismissiveAction: <Button color="primary" onClick={() => this.closeDialog('signOutDialog')}>Cancel</Button>,
-                      confirmingAction: <Button color="primary" disabled={performingAction} variant="contained" onClick={this.signOut}>Sign Out</Button>
+                      title: 'Log ud?',
+                      contentText: 'Når du er logget ud vil du ikke være i stand til at varetage din profil og benytte dine tilknyttede produkter',
+                      dismissiveAction: <Button color="primary" onClick={() => this.closeDialog('signOutDialog')}>Fortryd</Button>,
+                      confirmingAction: <Button color="primary" disabled={performingAction} variant="contained" onClick={this.signOut}>Log ud</Button>
                     }
                   }
                 }
@@ -488,6 +512,8 @@ class App extends Component {
         }
       });
     });
+    this.updateReadySnackbar();
+
   }
 
   componentWillUnmount() {

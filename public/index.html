@@ -2,11 +2,54 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#2196f3" />
     <meta name="description" content="%REACT_APP_DESCRIPTION%" />
-    <link rel="apple-touch-icon" href="logo192.png" />
+    <title>%REACT_APP_NAME% | Nu kan du sagtens selv</title>
+
+    <!-- Preconnect and DNS-Prefetch -->
+    <!-- Google CDN -->
+    <link rel="preconnect dns-prefetch" href="//ajax.googleapis.com" />
+    <!-- Google API -->
+    <link rel="preconnect dns-prefetch" href="//apis.google.com" />
+
+    <!-- Google Fonts -->
+    <!-- <link rel="preconnect dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preconnect dns-prefetch" href="//fonts.gstatic.com" /> -->
+
+    <!-- Google Analytics -->
+    <!-- <link rel="preconnect dns-prefetch" href="//www.google-analytics.com" /> -->
+    
+    <!-- Google Tag Manager -->
+    <link rel="preconnect dns-prefetch" href="//www.googletagmanager.com" />
+    <!-- Google Publisher Tag -->
+    <link rel="preconnect dns-prefetch" href="//www.googletagservices.com" />
+    <!-- Firebase -->
+    <link
+      rel="preconnect dns-prefetch"
+      href="//firebaselogging.googleapis.com"
+    />
+
+    <!-- Manifest icons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <!-- Manifest icons -->
+
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -21,7 +64,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>%REACT_APP_NAME%</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -36,5 +78,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script
+      src="//instant.page/3.0.0"
+      type="module"
+      defer
+      integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"
+    ></script>
   </body>
 </html>

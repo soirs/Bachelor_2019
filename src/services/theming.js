@@ -183,7 +183,23 @@ const defaultTheme = createMuiTheme({
 
   primaryColor: defaultPrimaryColor,
   secondaryColor: defaultSecondaryColor,
-  type: defaultType
+  type: defaultType,
+
+  typography: {
+    fontFamily: [
+      'Lato',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
 });
 
 const theming = {};
@@ -251,7 +267,23 @@ theming.createTheme = (theme) => {
 
     primaryColor: primaryColor,
     secondaryColor: secondaryColor,
-    type: type
+    type: type,
+
+    typography: {
+      fontFamily: [
+        'Lato',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
   });
 
   return theme;

@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Fab from '@material-ui/core/Fab';
-
-import HomeIcon from '@material-ui/icons/Home';
-
-import GitHubCircleIcon from 'mdi-material-ui/GithubCircle';
+// import HomeIcon from '@material-ui/icons/Home';
 
 import EmptyState from '../EmptyState';
+import Button from '@material-ui/core/Button';
+import Boligudlejning from '../Boligudlejning';
+import Illustration from '../Assets/documents_illustration.svg'
 
 const styles = (theme) => ({
   emptyStateIcon: {
@@ -18,7 +17,10 @@ const styles = (theme) => ({
   },
 
   button: {
-    marginTop: theme.spacing(1)
+    backgroundColor: '#79B729',
+    color: 'white',
+    marginTop: '5vh',
+    padding: '1vh 1.5vh'
   },
 
   buttonIcon: {
@@ -26,32 +28,40 @@ const styles = (theme) => ({
   }
 });
 
+
 class HomeContent extends Component {
   render() {
+    // Events
+    const { onSignUpClick, performingAction, openSnackbar, userData } = this.props;
+
     // Styling
     const { classes } = this.props;
 
     // Properties
     const { user } = this.props;
+    
+    const imgStyle = {
+      maxWidth: '100px',
+      textAlign: 'center',
+      cursor: 'pointer'
+    };
 
     if (user) {
       return (
-        <EmptyState
-          icon={<HomeIcon className={classes.emptyStateIcon} color="action" />}
-          title="Home"
-        />
+        <Boligudlejning user={user} userData={userData} openSnackbar={openSnackbar}/>
       );
     }
-
     return (
       <EmptyState
         title={process.env.REACT_APP_NAME}
-        description="The three musketeers, all in one pack in the form of a boilerplate app"
+        description="Nu kan du sagtens selv"
+        icon={
+          <img src={Illustration} alt='DR LOGO' style={imgStyle} />
+        }
         button={
-          <Fab className={classes.button} color="secondary" href="https://github.com/Phoqe/react-material-ui-firebase" rel="noopener noreferrer" target="_blank" variant="extended">
-            <GitHubCircleIcon className={classes.buttonIcon} />
-            GitHub
-          </Fab>
+          <Button className={classes.button} disabled={performingAction} variant="contained" onClick={onSignUpClick}>
+            Opret bruger
+          </Button>
         }
       />
     );
@@ -63,7 +73,20 @@ HomeContent.propTypes = {
   classes: PropTypes.object.isRequired,
 
   // Properties
-  user: PropTypes.object
+  performingAction: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  userData: PropTypes.object,
+
+  // Events
+  onSignUpClick: PropTypes.func,
+  // onTitleClick: PropTypes.func.isRequired,
+  // onSettingsClick: PropTypes.func.isRequired,
+  // onSignOutClick: PropTypes.func.isRequired
 };
+
+HomeContent.defaultProps = {
+  performingAction: false
+};
+
 
 export default withStyles(styles)(HomeContent);

@@ -14,10 +14,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 
-import AuthProviderList from '../AuthProviderList';
+// import AuthProviderList from '../AuthProviderList';
 
 import constraints from '../../constraints';
 import authentication from '../../services/authentication';
@@ -120,7 +120,7 @@ class SignUpDialog extends Component {
           const displayName = user.displayName;
           const emailAddress = user.email;
 
-          this.props.openSnackbar(`Signed in as ${displayName || emailAddress}`);
+          this.props.openSnackbar(`Logget ind som: ${displayName || emailAddress}`);
         });
       }).catch((reason) => {
         const code = reason.code;
@@ -213,9 +213,6 @@ class SignUpDialog extends Component {
   };
 
   render() {
-    // Styling
-    const { classes } = this.props;
-
     // Dialog Properties
     const { dialogProps } = this.props;
 
@@ -233,25 +230,13 @@ class SignUpDialog extends Component {
     return (
       <Dialog fullWidth maxWidth="sm" {...dialogProps} onKeyPress={this.handleKeyPress} onExited={this.handleExited}>
         <DialogTitle>
-          Sign up for an account
+          Opret din nye Digital Revisor bruger her
         </DialogTitle>
 
         <Hidden xsDown>
           <DialogContent>
             <Grid container direction="row">
-              <Grid item xs={4}>
-                <AuthProviderList
-                  performingAction={performingAction}
-
-                  onAuthProviderClick={this.signInWithAuthProvider}
-                />
-              </Grid>
-
-              <Grid item xs={1}>
-                <Divider className={classes.divider} orientation="vertical" />
-              </Grid>
-
-              <Grid item xs={7}>
+              <Grid item xs={8}>
                 <Grid container direction="column" spacing={2}>
                   <Grid item xs>
                     <TextField
@@ -260,8 +245,8 @@ class SignUpDialog extends Component {
                       error={!!(errors && errors.emailAddress)}
                       fullWidth
                       helperText={(errors && errors.emailAddress) ? errors.emailAddress[0] : ''}
-                      label="E-mail address"
-                      placeholder="john@doe.com"
+                      label="E-mail adresse"
+                      placeholder="john@madsen.dk"
                       required
                       type="email"
                       value={emailAddress}
@@ -278,8 +263,8 @@ class SignUpDialog extends Component {
                       error={!!(errors && errors.emailAddressConfirmation)}
                       fullWidth
                       helperText={(errors && errors.emailAddressConfirmation) ? errors.emailAddressConfirmation[0] : ''}
-                      label="E-mail address confirmation"
-                      placeholder="john@doe.com"
+                      label="E-mailadresse bekræftelse"
+                      placeholder="john@madsen.dk"
                       required
                       type="email"
                       value={emailAddressConfirmation}
@@ -296,7 +281,7 @@ class SignUpDialog extends Component {
                       error={!!(errors && errors.password)}
                       fullWidth
                       helperText={(errors && errors.password) ? errors.password[0] : ''}
-                      label="Password"
+                      label="Kodeord"
                       placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                       required
                       type="password"
@@ -314,7 +299,7 @@ class SignUpDialog extends Component {
                       error={!!(errors && errors.passwordConfirmation)}
                       fullWidth
                       helperText={(errors && errors.passwordConfirmation) ? errors.passwordConfirmation[0] : ''}
-                      label="Password confirmation"
+                      label="Kodeord bekræftelse"
                       placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                       required
                       type="password"
@@ -332,13 +317,6 @@ class SignUpDialog extends Component {
 
         <Hidden smUp>
           <DialogContent>
-            <AuthProviderList
-              gutterBottom
-              performingAction={performingAction}
-
-              onAuthProviderClick={this.signInWithAuthProvider}
-            />
-
             <Grid container direction="column" spacing={2}>
               <Grid item xs>
                 <TextField
@@ -347,8 +325,8 @@ class SignUpDialog extends Component {
                   error={!!(errors && errors.emailAddress)}
                   fullWidth
                   helperText={(errors && errors.emailAddress) ? errors.emailAddress[0] : ''}
-                  label="E-mail address"
-                  placeholder="john@doe.com"
+                  label="E-mail adresse"
+                  placeholder="john@madsen.dk"
                   required
                   type="email"
                   value={emailAddress}
@@ -365,8 +343,8 @@ class SignUpDialog extends Component {
                   error={!!(errors && errors.emailAddressConfirmation)}
                   fullWidth
                   helperText={(errors && errors.emailAddressConfirmation) ? errors.emailAddressConfirmation[0] : ''}
-                  label="E-mail address confirmation"
-                  placeholder="john@doe.com"
+                  label="E-mail adresse bekræftelse"
+                  placeholder="john@madsen.dk"
                   required
                   type="email"
                   value={emailAddressConfirmation}
@@ -401,7 +379,7 @@ class SignUpDialog extends Component {
                   error={!!(errors && errors.passwordConfirmation)}
                   fullWidth
                   helperText={(errors && errors.passwordConfirmation) ? errors.passwordConfirmation[0] : ''}
-                  label="Password confirmation"
+                  label="Password bekræftelse"
                   placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                   required
                   type="password"

@@ -12,6 +12,185 @@ const avatarFileTypes = [
 
 const authentication = {};
 
+authentication.updateEstate = (estateValue) => {
+  return new Promise((resolve, reject) => {
+    if (!estateValue) {
+      reject();
+
+      return;
+    }
+
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      reject();
+
+      return;
+    }
+
+    const uid = currentUser.uid;
+
+    if (!uid) {
+      reject();
+
+      return;
+    }
+
+    const reference = firestore.collection('users').doc(uid);
+
+    if (!reference) {
+      reject();
+
+      return;
+    }
+
+    reference.update({
+      estateValue: estateValue
+    }).then((value) => {
+      analytics.logEvent('change_estateValue');
+      resolve(value);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+};
+authentication.updateImprovement = (improvementValue) => {
+  return new Promise((resolve, reject) => {
+    if (!improvementValue) {
+      reject();
+
+      return;
+    }
+
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      reject();
+
+      return;
+    }
+
+    const uid = currentUser.uid;
+
+    if (!uid) {
+      reject();
+
+      return;
+    }
+
+    const reference = firestore.collection('users').doc(uid);
+
+    if (!reference) {
+      reject();
+
+      return;
+    }
+
+    reference.update({
+      improvementValue: improvementValue
+    }).then((value) => {
+      analytics.logEvent('change_improvementValue');
+      resolve(value);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+};
+authentication.updateSlider = (sliderValue) => {
+  return new Promise((resolve, reject) => {
+    if (!sliderValue) {
+      reject();
+
+      return;
+    }
+
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      reject();
+
+      return;
+    }
+
+    const uid = currentUser.uid;
+
+    if (!uid) {
+      reject();
+
+      return;
+    }
+
+    const reference = firestore.collection('users').doc(uid);
+
+    if (!reference) {
+      reject();
+
+      return;
+    }
+
+    reference.update({
+      sliderValue: sliderValue
+    }).then((value) => {
+      analytics.logEvent('change_sliderValue');
+      resolve(value);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+};
+authentication.updateForm = (formValue) => {
+  return new Promise((resolve, reject) => {
+    if (!formValue) {
+      reject();
+
+      return;
+    }
+
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      reject();
+
+      return;
+    }
+
+    const uid = currentUser.uid;
+
+    if (!uid) {
+      reject();
+
+      return;
+    }
+
+    const reference = firestore.collection('users').doc(uid);
+
+    if (!reference) {
+      reject();
+
+      return;
+    }
+
+    reference.update({
+      formValue: formValue
+    }).then((value) => {
+      analytics.logEvent('change_sliderValue');
+      resolve(value);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
 authentication.signUp = (fields) => {
   return new Promise((resolve, reject) => {
     if (!fields) {
@@ -100,7 +279,8 @@ authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
       return;
     }
 
-    auth.createUserWithEmailAndPassword(emailAddress, password).then((value) => {
+    auth.createUserWithEmailAndPassword(emailAddress, password)
+    .then((value) => {
       const user = value.user;
 
       if (!user) {
@@ -116,7 +296,6 @@ authentication.signUpWithEmailAddressAndPassword = (emailAddress, password) => {
 
         return;
       }
-
       const reference = firestore.collection('users').doc(uid);
 
       if (!reference) {
@@ -156,7 +335,8 @@ authentication.signIn = (emailAddress, password) => {
       return;
     }
 
-    auth.signInWithEmailAndPassword(emailAddress, password).then((value) => {
+    auth.signInWithEmailAndPassword(emailAddress, password)
+    .then((value) => {
       const user = value.user;
 
       if (!user) {

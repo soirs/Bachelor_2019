@@ -14,10 +14,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-
-import AuthProviderList from '../AuthProviderList';
+// import AuthProviderList from '../AuthProviderList';
 
 import constraints from '../../constraints';
 import authentication from '../../services/authentication';
@@ -129,7 +128,7 @@ class SignInDialog extends Component {
             const displayName = user.displayName;
             const emailAddress = user.email;
 
-            this.props.openSnackbar(`Signed in as ${displayName || emailAddress}`);
+            this.props.openSnackbar(`Logget ind som: ${displayName || emailAddress}`);
           });
         }).catch((reason) => {
           const code = reason.code;
@@ -165,7 +164,7 @@ class SignInDialog extends Component {
           const displayName = user.displayName;
           const emailAddress = user.email;
 
-          this.props.openSnackbar(`Signed in as ${displayName || emailAddress}`);
+          this.props.openSnackbar(`Logget ind som: ${displayName || emailAddress}`);
         });
       }).catch((reason) => {
         const code = reason.code;
@@ -235,7 +234,7 @@ class SignInDialog extends Component {
 
   render() {
     // Styling
-    const { classes } = this.props;
+    // const { classes } = this.props;
 
     // Dialog Properties
     const { dialogProps } = this.props;
@@ -252,24 +251,13 @@ class SignInDialog extends Component {
     return (
       <Dialog fullWidth maxWidth="sm" {...dialogProps} onKeyPress={this.handleKeyPress} onExited={this.handleExited}>
         <DialogTitle>
-          Sign in to your account
+          Velkommen tilbage!
+          <br/>
+          Vi er glade for at se dig igen
         </DialogTitle>
-
         <DialogContent>
           <Hidden xsDown>
             <Grid container direction="row">
-              <Grid item xs={4}>
-                <AuthProviderList
-                  performingAction={performingAction}
-
-                  onAuthProviderClick={this.signInWithAuthProvider}
-                />
-              </Grid>
-
-              <Grid item xs={1}>
-                <Divider className={classes.divider} orientation="vertical" />
-              </Grid>
-
               <Grid item xs={7}>
                 <Grid container direction="column" spacing={2}>
                   <Grid item xs>
@@ -279,8 +267,8 @@ class SignInDialog extends Component {
                       error={!!(errors && errors.emailAddress)}
                       fullWidth
                       helperText={(errors && errors.emailAddress) ? errors.emailAddress[0] : ''}
-                      label="E-mail address"
-                      placeholder="john@doe.com"
+                      label="E-mail adresse"
+                      placeholder="john@madsen.dk"
                       required
                       type="email"
                       value={emailAddress}
@@ -313,13 +301,6 @@ class SignInDialog extends Component {
           </Hidden>
 
           <Hidden smUp>
-            <AuthProviderList
-              gutterBottom
-              performingAction={performingAction}
-
-              onAuthProviderClick={this.signInWithAuthProvider}
-            />
-
             <Grid container direction="column" spacing={2}>
               <Grid item xs>
                 <TextField
@@ -328,8 +309,8 @@ class SignInDialog extends Component {
                   error={!!(errors && errors.emailAddress)}
                   fullWidth
                   helperText={(errors && errors.emailAddress) ? errors.emailAddress[0] : ''}
-                  label="E-mail address"
-                  placeholder="john@doe.com"
+                  label="E-mail adresse"
+                  placeholder="john@madsen.dk"
                   required
                   type="email"
                   value={emailAddress}
@@ -361,7 +342,7 @@ class SignInDialog extends Component {
         </DialogContent>
 
         <DialogActions>
-          <Button color="primary" onClick={dialogProps.onClose}>Cancel</Button>
+          <Button color="primary" onClick={dialogProps.onClose}>Annuller</Button>
 
           <Button
             color="primary"
@@ -369,7 +350,7 @@ class SignInDialog extends Component {
             variant="outlined"
 
             onClick={this.resetPassword}>
-            Reset password
+            Nulstil kodeord
           </Button>
 
           <Button
@@ -378,7 +359,7 @@ class SignInDialog extends Component {
             variant="contained"
 
             onClick={this.signIn}>
-            Sign in
+            Log ind
           </Button>
         </DialogActions>
       </Dialog>

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import PersonIcon from '@material-ui/icons/Person';
 
 import authentication from '../../services/authentication';
+import Logo from '../Assets/digital_revisor_logo_white.svg'
 
 class Bar extends Component {
   constructor(props) {
@@ -93,18 +93,29 @@ class Bar extends Component {
 
     // Events
     const {
-      onTitleClick,
-      onSignUpClick,
       onSignInClick
     } = this.props;
 
+    const imgStyle = {
+      // maxWidth: '100px',
+      // textAlign: 'center',
+      maxHeight: '45px',
+      cursor: 'pointer'
+    };
+
+    const barStyle = {
+      background: '#1b1c1d',
+    };
+    const boxStyle = {
+      maxHeight: '45px'
+    };
     const { menu } = this.state;
 
     return (
-      <AppBar color="primary" position="static">
+      <AppBar color="primary" style={barStyle} position="static">
         <Toolbar variant="regular">
-          <Box display="flex" flexGrow={1}>
-            <Typography style={{ cursor: 'pointer' }} color="inherit" variant="h6" onClick={onTitleClick}>{process.env.REACT_APP_NAME}</Typography>
+        <img src={Logo} alt='DR LOGO' style={imgStyle} />
+          <Box display="flex" flexGrow={1} style={boxStyle}>
           </Box>
 
           {user &&
@@ -114,19 +125,19 @@ class Bar extends Component {
               </IconButton>
 
               <Menu anchorEl={menu.anchorEl} open={Boolean(menu.anchorEl)} onClose={this.closeMenu}>
-                <MenuItem disabled={performingAction} onClick={this.handleSettingsClick}>Settings</MenuItem>
-                <MenuItem disabled={performingAction} onClick={this.handleSignOutClick}>Sign out</MenuItem>
+                <MenuItem disabled={performingAction} onClick={this.handleSettingsClick}>Indstillinger</MenuItem>
+                <MenuItem disabled={performingAction} onClick={this.handleSignOutClick}>Log ud</MenuItem>
               </Menu>
             </>
           }
 
           {!user &&
             <>
-              <Box mr={1}>
-                <Button color="secondary" disabled={performingAction} variant="contained" onClick={onSignUpClick}>Sign Up</Button>
-              </Box>
+              {/* <Box mr={1}>
+                <Button color="secondary" disabled={performingAction} variant="contained" onClick={onSignUpClick}>Opret bruger</Button>
+              </Box> */}
 
-              <Button color="secondary" disabled={performingAction} variant="contained" onClick={onSignInClick}>Sign In</Button>
+              <Button color="secondary" disabled={performingAction} variant="contained" onClick={onSignInClick}>Log ind</Button>
             </>
           }
         </Toolbar>
@@ -146,7 +157,7 @@ Bar.propTypes = {
   userData: PropTypes.object,
 
   // Events
-  onTitleClick: PropTypes.func.isRequired,
+  // onTitleClick: PropTypes.func.isRequired,
   onSettingsClick: PropTypes.func.isRequired,
   onSignOutClick: PropTypes.func.isRequired
 };
