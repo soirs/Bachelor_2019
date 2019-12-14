@@ -21,6 +21,7 @@ import TextField from '@material-ui/core/TextField';
 
 import constraints from '../../constraints';
 import authentication from '../../services/authentication';
+import WorkingSVG from '../Assets/working.svg'
 
 const styles = (theme) => ({
   icon: {
@@ -229,18 +230,42 @@ class SignUpDialog extends Component {
       errors
     } = this.state;
 
+    const imgStyle = {
+      maxWidth: '50%',
+      width: '50%',
+      display: 'inherit',
+      margin: '40px auto 0',
+    };
+
+    const titleStyle = {
+      width: '100%',
+      margin: '20px auto 0',
+      display: 'inherit',
+      textAlign: 'center'
+    };
+
+    const subtitleStyle = {
+      width: '100%',
+      margin: '0 auto 20px',
+      display: 'inherit',
+      textAlign: 'center',
+      fontSize: '16px'
+    };
+
     return (
-      <Dialog fullWidth maxWidth="sm" {...dialogProps} onKeyPress={this.handleKeyPress} onExited={this.handleExited}>
+      <Dialog fullWidth maxWidth="xs" {...dialogProps} onKeyPress={this.handleKeyPress} onExited={this.handleExited}>
         <DialogTitle>
-          Opret din nye Digital Revisor bruger her
+        <img src={WorkingSVG} alt="" style={imgStyle} />
+        <span style={titleStyle}>Velkommen til Digital Revisor!</span>
+          <span style={subtitleStyle}>Opret din nye bruger her</span>
         </DialogTitle>
 
         <Hidden xsDown>
           <DialogContent>
             <Grid container direction="row">
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <Grid container direction="column" spacing={2}>
-                  <Grid item xs>
+                  <Grid item>
                     <TextField
                       autoComplete="email"
                       disabled={performingAction}
@@ -258,25 +283,7 @@ class SignUpDialog extends Component {
                     />
                   </Grid>
 
-                  {/* <Grid item xs>
-                    <TextField
-                      autoComplete="email"
-                      disabled={performingAction}
-                      error={!!(errors && errors.emailAddressConfirmation)}
-                      fullWidth
-                      helperText={(errors && errors.emailAddressConfirmation) ? errors.emailAddressConfirmation[0] : ''}
-                      label="E-mail adresse bekræftelse"
-                      placeholder="john@madsen.dk"
-                      required
-                      type="email"
-                      value={emailAddressConfirmation}
-                      variant="outlined"
-
-                      onChange={this.handleEmailAddressConfirmationChange}
-                    />
-                  </Grid> */}
-
-                  <Grid item xs>
+                  <Grid item>
                     <TextField
                       autoComplete="new-password"
                       disabled={performingAction}
@@ -293,24 +300,6 @@ class SignUpDialog extends Component {
                       onChange={this.handlePasswordChange}
                     />
                   </Grid>
-
-                  {/* <Grid item xs>
-                    <TextField
-                      autoComplete="password"
-                      disabled={performingAction}
-                      error={!!(errors && errors.passwordConfirmation)}
-                      fullWidth
-                      helperText={(errors && errors.passwordConfirmation) ? errors.passwordConfirmation[0] : ''}
-                      label="Kodeord bekræftelse"
-                      placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                      required
-                      type="password"
-                      value={passwordConfirmation}
-                      variant="outlined"
-
-                      onChange={this.handlePasswordConfirmationChange}
-                    />
-                  </Grid> */}
                 </Grid>
               </Grid>
             </Grid>
@@ -338,25 +327,7 @@ class SignUpDialog extends Component {
                 />
               </Grid>
 
-              {/* <Grid item xs>
-                <TextField
-                  autoComplete="email"
-                  disabled={performingAction}
-                  error={!!(errors && errors.emailAddressConfirmation)}
-                  fullWidth
-                  helperText={(errors && errors.emailAddressConfirmation) ? errors.emailAddressConfirmation[0] : ''}
-                  label="E-mail adresse bekræftelse"
-                  placeholder="john@madsen.dk"
-                  required
-                  type="email"
-                  value={emailAddressConfirmation}
-                  variant="outlined"
-
-                  onChange={this.handleEmailAddressConfirmationChange}
-                />
-              </Grid> */}
-
-              <Grid item xs>
+              <Grid item >
                 <TextField
                   autoComplete="new-password"
                   disabled={performingAction}
@@ -373,30 +344,12 @@ class SignUpDialog extends Component {
                   onChange={this.handlePasswordChange}
                 />
               </Grid>
-
-              {/* <Grid item xs>
-                <TextField
-                  autoComplete="password"
-                  disabled={performingAction}
-                  error={!!(errors && errors.passwordConfirmation)}
-                  fullWidth
-                  helperText={(errors && errors.passwordConfirmation) ? errors.passwordConfirmation[0] : ''}
-                  label="Kodeord bekræftelse"
-                  placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                  required
-                  type="password"
-                  value={passwordConfirmation}
-                  variant="outlined"
-
-                  onChange={this.handlePasswordConfirmationChange}
-                />
-              </Grid> */}
             </Grid>
           </DialogContent>
         </Hidden>
 
         <DialogActions>
-          <Button color="primary" onClick={dialogProps.onClose}>Cancel</Button>
+          <Button color="primary" onClick={dialogProps.onClose}>Annuller</Button>
 
           <Button
             color="primary"
@@ -410,7 +363,7 @@ class SignUpDialog extends Component {
             variant="contained"
 
             onClick={this.signUp}>
-            Sign up
+            Opret bruger
           </Button>
         </DialogActions>
       </Dialog>

@@ -20,6 +20,7 @@ import TextField from '@material-ui/core/TextField';
 
 import constraints from '../../constraints';
 import authentication from '../../services/authentication';
+import WelcomeSVG from '../Assets/welcome.svg'
 
 const styles = (theme) => ({
   icon: {
@@ -248,19 +249,41 @@ class SignInDialog extends Component {
       errors
     } = this.state;
 
+    const imgStyle = {
+      maxWidth: '50%',
+      width: '50%',
+      display: 'inherit',
+      margin: 'auto',
+    };
+
+    const titleStyle = {
+      width: '100%',
+      margin: '20px auto 0',
+      display: 'inherit',
+      textAlign: 'center'
+    };
+
+    const subtitleStyle = {
+      width: '100%',
+      margin: '0 auto 20px',
+      display: 'inherit',
+      textAlign: 'center',
+      fontSize: '16px'
+    };
+
     return (
-      <Dialog fullWidth maxWidth="sm" {...dialogProps} onKeyPress={this.handleKeyPress} onExited={this.handleExited}>
+      <Dialog fullWidth maxWidth="xs" {...dialogProps} onKeyPress={this.handleKeyPress} onExited={this.handleExited}>
         <DialogTitle>
-          Velkommen tilbage!
-          <br/>
-          Vi er glade for at se dig igen
+          <img src={WelcomeSVG} alt="" style={imgStyle} />
+          <span style={titleStyle}>Velkommen tilbage!</span>
+          <span style={subtitleStyle}>Vi er glade for at se dig igen</span>
         </DialogTitle>
         <DialogContent>
           <Hidden xsDown>
             <Grid container direction="row">
-              <Grid item xs={7}>
+              <Grid item xs={12}>
                 <Grid container direction="column" spacing={2}>
-                  <Grid item xs>
+                  <Grid item>
                     <TextField
                       autoComplete="email"
                       disabled={performingAction}
@@ -302,7 +325,7 @@ class SignInDialog extends Component {
 
           <Hidden smUp>
             <Grid container direction="column" spacing={2}>
-              <Grid item xs>
+              <Grid item>
                 <TextField
                   autoComplete="email"
                   disabled={performingAction}

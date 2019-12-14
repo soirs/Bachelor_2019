@@ -11,7 +11,7 @@ import NotFoundContent from '../NotFoundContent';
 class Router extends Component {
   render(props) {
     // Properties
-    const { user, performingAction, onSignUpClick, openSnackbar, userData } = this.props;
+    const { user, performingAction, onSignUpClick, openSnackbar, userData, installApp } = this.props;
 
     return (
       <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
@@ -21,16 +21,12 @@ class Router extends Component {
             <HomeContent
               user={user}
               userData={userData}
+              installApp={installApp}
               performingAction={performingAction}
               openSnackbar={openSnackbar}
               onSignUpClick={onSignUpClick}
               {...props} />
           </Route>
-          {/* 
-          <Route path='/Boligudlejning' exact>
-            <Boligudlejning user={user} performingAction={performingAction} openSnackbar={openSnackbar} {...props} />
-          </Route>
- */}
 
           <Route>
             <NotFoundContent />

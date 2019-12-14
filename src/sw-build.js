@@ -7,14 +7,14 @@ const buildSW = () => {
     swDest: 'build/sw.js', // this will be created in the build step
     globDirectory: 'build',
     globPatterns: [
-      '**/*.{js,css,html,json}',
+      '**/*.{js,css,html,json}', // filetypes to precache
     ],
   }).then(({ count, size, warnings }) => {
-    // Optionally, log any warnings and dasetails.
+    /*  Log any warnings and details - makes it easier to debug */
     warnings.forEach(console.warn);
     console.log(`⏺  ${count} files will be precached, totaling ${size} bytes.`);
   }).catch((err) => {
-    console.error(`❗️❗️❗️Unable to generate a new service worker.`, err);
+    console.error(`❗️❗️❗️Unable to generate a new service worker❗️❗️❗️`, err);
   });
 }
 buildSW();

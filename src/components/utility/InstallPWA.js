@@ -17,11 +17,10 @@ export default function InstallPWA() {
   const handleClose = () => {
     setOpen(false);
   };
-  // handleClickOpen(true)
 
     useEffect(
     () => {
-      handleClickOpen(true)
+      handleClickOpen()
     }, []
   )
 
@@ -50,7 +49,7 @@ export default function InstallPWA() {
         </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClose} color="primary">
             Luk
           </Button>
         </DialogActions>

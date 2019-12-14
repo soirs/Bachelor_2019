@@ -13,9 +13,6 @@ import BasicInfo from './BasicInfo';
 import Questions from './Questions';
 import Review from './Review';
 
-// import Link from '@material-ui/core/Link';
-// import Box from '@material-ui/core/Box';
-// import Divider from '@material-ui/core/Divider';
 import authentication from '../../services/authentication';
 
 const styles = (theme => ({
@@ -23,6 +20,7 @@ const styles = (theme => ({
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     [theme.breakpoints.up(600 + theme.spacing(2) * 1)]: {
       width: 600,
       marginLeft: 'auto',
@@ -111,7 +109,7 @@ class Boligudlejning extends Component {
         performingAction: true
       }, () => {
         authentication.updateEstate(estateValue).then(() => {
-          const {openSnackbar } = this.props;
+          const { openSnackbar } = this.props;
           openSnackbar('Værdi opdateret');
 
         }).catch((reason) => {
@@ -213,7 +211,7 @@ class Boligudlejning extends Component {
         performingAction: true
       }, () => {
         authentication.updateForm(formValue).then(() => {
-          const {openSnackbar } = this.props;
+          const { openSnackbar } = this.props;
           openSnackbar('Værdi opdateret');
 
         }).catch((reason) => {
@@ -235,7 +233,7 @@ class Boligudlejning extends Component {
     const { estateValue, improvementValue, sliderValue, formValue } = this.state;
     switch (step) {
       case 0:
-        return <BasicInfo estateValue={estateValue} estateChange={this.estateChange} improvementValue={improvementValue} improvementChange={this.improvementChange} userData={this.props.userData}/>;
+        return <BasicInfo estateValue={estateValue} estateChange={this.estateChange} improvementValue={improvementValue} improvementChange={this.improvementChange} userData={this.props.userData} />;
       case 1:
         return <Questions sliderValue={sliderValue} sliderChange={this.sliderChange} formValue={formValue} formChange={this.formChange} userData={this.props.userData} />;
       case 2:
@@ -278,10 +276,9 @@ class Boligudlejning extends Component {
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-
             <Typography component="h1" variant="h4" align="center">
               Selvangivelse 2019
-          </Typography>
+            </Typography>
 
             <Typography color="textSecondary" align="center" variant="subtitle1">Boligudlejning</Typography>
 
@@ -312,7 +309,7 @@ class Boligudlejning extends Component {
                     {this.getStepContent(activeStep)}
                     <div className={classes.buttons}>
                       {activeStep !== 0 && (
-                        <Button onClick={this.handleBack} className={classes.button}>
+                        <Button variant="outlined" onClick={this.handleBack} className={classes.button}>
                           Tilbage
                     </Button>
                       )}

@@ -17,7 +17,7 @@ const styles = (theme) => ({
   },
 
   button: {
-    backgroundColor: '#79B729',
+    // backgroundColor: '#79B729',
     color: 'white',
     marginTop: '5vh',
     padding: '1vh 1.5vh'
@@ -28,7 +28,6 @@ const styles = (theme) => ({
     padding: '1vh 1.5vh'
   },
 
-
   buttonIcon: {
     marginRight: theme.spacing(1)
   }
@@ -36,40 +35,9 @@ const styles = (theme) => ({
 
 
 class HomeContent extends Component {
-  installPrompt = null;
-  componentDidMount() {
-    console.log("Listening for Install prompt");
-    window.addEventListener('beforeinstallprompt', e => {
-      // For older browsers
-      e.preventDefault();
-      console.log("Install Prompt fired");
-      this.installPrompt = e;
-      console.log('this.installPrompt :', this.installPrompt);
-      // See if the app is already installed, in that case, do nothing.
-      if ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true) {
-        return false;
-      }
-    })
-  }
-  installApp = async () => {
-    if (!this.installPrompt) { return false }
-    this.installPrompt.prompt();
-
-    let outcome = await this.installPrompt.userChoice;
-    // eslint-disable-next-line eqeqeq
-    if (outcome.outcome == 'accepted') {
-      console.log("PWA setup accepted")
-    }
-    else {
-      console.log("PWA setup rejected");
-    }
-    // Remove the event reference
-    this.installPrompt = null;
-  }
-
   render() {
     // Events
-    const { onSignUpClick, performingAction, openSnackbar, userData } = this.props;
+    const { onSignUpClick, performingAction, openSnackbar, userData, installApp } = this.props;
 
     // Styling
     const { classes } = this.props;
@@ -80,11 +48,11 @@ class HomeContent extends Component {
     const imgStyle = {
       maxWidth: '100px',
       textAlign: 'center',
-      cursor: 'pointer'
     };
 
     let isIOS = /iPad|iPhone|iPod/.test(navigator.platform)
       || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    let isStandalone = ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true)
 
     if (user) {
       return (
@@ -99,13 +67,15 @@ class HomeContent extends Component {
           <img src={Illustration} alt='DR LOGO' style={imgStyle} />
         }
         button={
-          <Button className={classes.button} disabled={performingAction} variant="contained" onClick={onSignUpClick}>
+          <Button className={classes.button} disabled={performingAction}
+            color='primary'
+            variant="contained" onClick={onSignUpClick}>
             Opret bruger
           </Button>
         }
         a2hsBtn={
-          !isIOS &&
-          <Button className={classes.a2hs} color='secondary' disabled={performingAction} variant="contained" onClick={this.installApp}>
+          !isIOS && !isStandalone &&
+          <Button className={classes.a2hs} color='secondary' disabled={performingAction} variant="contained" onClick={installApp}>
             Download app
           </Button>
         }

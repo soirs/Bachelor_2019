@@ -8,6 +8,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Illustration from '../Assets/documents_illustration.svg'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,15 +54,25 @@ export default function Review(props) {
     currency: 'DKK',
   });
 
+  const imgStyle = {
+    maxWidth: '20%',
+    width: '20%',
+    display: 'inherit',
+    margin: '0 auto 20px',
+  };
+
   return (
     <React.Fragment>
+      <img src={Illustration} alt="" style={imgStyle} />
 
       <ExpansionPanel className={classes.root}>
+
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel"
           id="panel1a-header"
         >
+
           <Typography className={classes.heading} variant="subtitle1">Du har indtastet følgende:</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
@@ -87,12 +98,9 @@ export default function Review(props) {
         </ExpansionPanelDetails>
       </ExpansionPanel>
 
-      <br />
-      <br />
-
       <Typography variant="h5" gutterBottom>
         Indberet følgende på din selvangivelse:
-  </Typography>
+      </Typography>
 
       <Typography variant='subtitle1'>
         <strong>Rubrik 221</strong>

@@ -18,15 +18,15 @@ import Hidden from '@material-ui/core/Hidden';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import PaletteIcon from '@material-ui/icons/Palette';
-import LinkIcon from '@material-ui/icons/Link';
+// import PaletteIcon from '@material-ui/icons/Palette';
+// import LinkIcon from '@material-ui/icons/Link';
 import SecurityIcon from '@material-ui/icons/Security';
 
 import SwipeableViews from 'react-swipeable-views';
 
 import AccountTab from '../AccountTab';
-import AppearanceTab from '../AppearanceTab';
-import LinksTab from '../LinksTab';
+// import AppearanceTab from '../AppearanceTab';
+// import LinksTab from '../LinksTab';
 import SecurityTab from '../SecurityTab';
 
 const styles = (theme) => ({
@@ -48,17 +48,17 @@ const tabs = [
     label: 'Account'
   },
 
-  {
-    key: 'appearance',
-    icon: <PaletteIcon />,
-    label: 'Appearance'
-  },
+  // {
+  //   key: 'appearance',
+  //   icon: <PaletteIcon />,
+  //   label: 'Appearance'
+  // },
 
-  {
-    key: 'links',
-    icon: <LinkIcon />,
-    label: 'Links'
-  },
+  // {
+  //   key: 'links',
+  //   icon: <LinkIcon />,
+  //   label: 'Links'
+  // },
 
   {
     key: 'security',
@@ -158,10 +158,10 @@ class SettingsDialog extends Component {
             style={{ overflow: 'initial', minHeight: 'initial' }}
 
             indicatorColor="primary"
-            scrollButtons="off"
+            // scrollButtons="on"
             textColor="primary"
             value={selectedTab}
-            variant="scrollable"
+            variant="fullWidth"
             onChange={this.handleTabChange}>
             {tabs.map((tab) => {
               return (
@@ -181,7 +181,7 @@ class SettingsDialog extends Component {
             onDeleteAccountClick={onDeleteAccountClick}
           />
 
-          <AppearanceTab
+          {/*           <AppearanceTab
             theme={theme}
 
             openSnackbar={openSnackbar}
@@ -191,7 +191,7 @@ class SettingsDialog extends Component {
             theme={theme}
 
             openSnackbar={openSnackbar}
-          />
+          /> */}
 
           <SecurityTab
             user={user}

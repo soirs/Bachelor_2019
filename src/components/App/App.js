@@ -20,6 +20,7 @@ import Router from '../Router';
 import DialogHost from '../DialogHost';
 import InstallPWA from "../utility/InstallPWA";
 import moment from 'moment';
+import FooterBar from '../FooterBar';
 
 class App extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class App extends Component {
       }
     };
   }
-
+  /* Open login/logout dialog */
   openDialog = (dialogId, callback) => {
     const dialog = this.state[dialogId];
 
@@ -76,7 +77,7 @@ class App extends Component {
 
     this.setState({ dialog }, callback);
   };
-
+  /* Close Dialogs */
   closeDialog = (dialogId, callback) => {
     const dialog = this.state[dialogId];
 
@@ -89,6 +90,7 @@ class App extends Component {
     this.setState({ dialog }, callback);
   };
 
+  /* Settings & Login/Logout Dialog */
   closeAllDialogs = (callback) => {
     this.setState({
       aboutDialog: {
@@ -117,6 +119,7 @@ class App extends Component {
     }, callback);
   };
 
+  /* Within settings - delete account */
   deleteAccount = () => {
     this.setState({
       performingAction: true
@@ -141,7 +144,7 @@ class App extends Component {
       });
     });
   };
-
+  /* Sign out action */
   signOut = () => {
     this.setState({
       performingAction: true
@@ -167,6 +170,7 @@ class App extends Component {
     });
   };
 
+  /* Snackbar/toast messages - supply only a message string */
   openSnackbar = (message, autoHideDuration = 2, callback) => {
     this.setState({
       snackbar: {
@@ -181,7 +185,7 @@ class App extends Component {
       }
     });
   };
-
+  /* Uses openSnackbars autoHideDuration to activate */
   closeSnackbar = (clearMessage = false) => {
     const { snackbar } = this.state;
 
@@ -193,6 +197,7 @@ class App extends Component {
     });
   };
 
+  /* Emit: App is updating to newest version when the controllerchange value changes from null. */
   updateReadySnackbar = () => {
     if ('serviceWorker' in navigator) {
       let refreshing;
@@ -205,20 +210,19 @@ class App extends Component {
       const fireUpdatePrompt = () => this.openSnackbar('Opdaterer til nyeste version');
     }
   }
-
+  /* A prompt only shown on iOS devices to add the appliaction to homescreen */
+  /* The delay is 30 days until next automatic prompt */
+  /* NOTE: iOS will not prompt if the application is already installed or on homescreen */
   iosA2HSPrompt = () => {
-    if (navigator.standalone) {
+    if (navigator.standalone) { // if the device responds with being already installed - the function defaults
       return false;
     }
 
-    let today = moment().toDate();
-    let lastPrompt = moment(localStorage.getItem("installPrompt"));
-    let days = moment(today).diff(lastPrompt, "days");
+    let today = moment().toDate(); // fetches todays date
+    let lastPrompt = moment(localStorage.getItem("installPrompt")); // tries to fetch installPrompt from localStorage
+    let days = moment(today).diff(lastPrompt, "days"); // checks days between lastPrompt and today
 
-    let isIOS = /iPad|iPhone|iPod/.test(navigator.platform)
-      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-
-    let isApple = ['iPhone', 'iPad', 'iPod'].includes(window.navigator.platform) || isIOS;
+    let isApple = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 
     let prompt = (isNaN(days) || days > 30) && isApple;
 
@@ -226,6 +230,26 @@ class App extends Component {
       localStorage.setItem("installPrompt", today);
     }
     return prompt && <InstallPWA />
+  }
+
+  installPrompt = null;
+
+  installApp = async () => {
+    if (!this.installPrompt) { return false }
+    console.log("Started installing app")
+
+    this.installPrompt.prompt();
+
+    let outcome = await this.installPrompt.userChoice;
+    // eslint-disable-next-line eqeqeq
+    if (outcome.outcome == 'accepted') {
+      console.log("PWA setup accepted")
+    }
+    else {
+      console.log("PWA setup rejected");
+    }
+    // Remove the event reference
+    this.installPrompt = null;
   }
 
   render(props) {
@@ -252,9 +276,8 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
 
-        {/* A2HS */}
-        {this.iosA2HSPrompt()}
-        {/* A2HS */}
+        {/* A2HS iOS */}
+        {this.iosA2HSPrompt}
 
         {!ready &&
           <LaunchScreen />
@@ -277,13 +300,21 @@ class App extends Component {
 
             <Router
               performingAction={performingAction}
-
+              installApp={this.installApp}
               user={user}
               userData={userData}
               openSnackbar={this.openSnackbar}
-
-              // For <HomeContent/>
               onSignUpClick={() => this.openDialog('signUpDialog')}
+            />
+
+            <br />
+            <br />
+
+            <FooterBar
+              user={user}
+              onSettingsClick={() => this.openDialog('settingsDialog')}
+              installApp={this.installApp}
+              performingAction={performingAction}
             />
 
             <DialogHost
@@ -537,6 +568,19 @@ class App extends Component {
         }
       });
     });
+
+    console.log("Listening for Install prompt");
+    window.addEventListener('beforeinstallprompt', e => {
+      // For older browsers
+      e.preventDefault();
+      console.log("Install Prompt fired");
+      this.installPrompt = e;
+      // See if the app is already installed, in that case, do nothing.
+      if ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true) {
+        return false;
+      }
+    })
+
     this.updateReadySnackbar();
   }
 

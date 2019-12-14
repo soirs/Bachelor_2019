@@ -104,7 +104,7 @@ class Bar extends Component {
     };
 
     const barStyle = {
-      background: '#1b1c1d',
+      background: '#335236',
     };
     const boxStyle = {
       maxHeight: '45px'

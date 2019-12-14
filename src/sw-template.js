@@ -8,7 +8,6 @@ if ('function' === typeof importScripts) {
     console.log('Workbox is loaded');
 
     self.addEventListener('install', event => { // fetches newest SW at install
-        console.log('skipwaiting 1')
         self.skipWaiting();
     });
 
@@ -17,48 +16,15 @@ if ('function' === typeof importScripts) {
       cleanupOutdatedCaches: true
     });
 
-    // Clears cache when messaged
-    self.addEventListener('message', (event) => {
-      if (event.data === 'clear-cache') {
-        expirationPlugin.deleteCacheAndMetadata();
-      }
-    });
-
-    /* injection point for manifest files.  */
+    /* Injection point for manifest files. Creates all the paths to precache based on settings in /sw-build.js */
     workbox.precaching.precacheAndRoute([]);
 
-    /* ALL PUBLIC FILES */
+    /* Caches all files in the /public folder and prioritizes fresh data */
     workbox.routing.registerRoute(
       /public\/(.*)/,
       new workbox.strategies.NetworkFirst())
 
-      
-    /* custom cache rules*/
-    // workbox.routing.registerNavigationRoute('/index.html', {
-    //   whitelist: 
-    //   blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/],
-    // });
-
-    // // Background sync
-    // workbox.routing.registerRoute(
-    //   new RegExp('/event/'),
-    //   new workbox.strategies.CacheFirst({
-    //     cacheName: 'events',
-    //     plugins: [
-    //       new workbox.expiration.Plugin({
-    //         maxEntries: 20,
-    //         maxAgeSeconds: 24 * 60 * 60 //1 day
-    //       }),
-    //       new workbox.backgroundSync.Plugin('events', {
-    //         maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
-    //       })
-    //     ]
-    //   })
-    // );
-
-
-
-    // STATIC RESSOURCES
+    // STATIC RESSOURCES 
     workbox.routing.registerRoute(
       /\.(?:js|css)$/,
       new workbox.strategies.StaleWhileRevalidate({
@@ -73,7 +39,7 @@ if ('function' === typeof importScripts) {
       })
     );
 
-    /* IMAGES & GLYPHTER CACHE */
+    /* IMAGE CACHE */
     workbox.routing.registerRoute(
       /\.(?:png|gif|jpg|jpeg|svg|ico)$/,
       new workbox.strategies.CacheFirst({
