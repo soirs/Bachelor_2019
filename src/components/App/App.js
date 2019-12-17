@@ -207,7 +207,7 @@ class App extends Component {
         refreshing = true;
         return fireUpdatePrompt();
       });
-      const fireUpdatePrompt = () => this.openSnackbar('Opdaterer til nyeste version');
+      const fireUpdatePrompt = () => this.openSnackbar('Opdaterer til nyeste version. Venligst klik på logoet for at få den nyeste version');
     }
   }
   /* A prompt only shown on iOS devices to add the appliaction to homescreen */
@@ -229,7 +229,9 @@ class App extends Component {
     if (isApple && "localStorage" in window) {
       localStorage.setItem("installPrompt", today);
     }
-    return prompt && <InstallPWA />
+    if (prompt) {
+      return true
+    }
   }
 
   installPrompt = null;
@@ -277,7 +279,7 @@ class App extends Component {
         <CssBaseline />
 
         {/* A2HS iOS */}
-        {this.iosA2HSPrompt}
+        {this.iosA2HSPrompt() && <InstallPWA />}
 
         {!ready &&
           <LaunchScreen />

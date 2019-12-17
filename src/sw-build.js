@@ -1,18 +1,17 @@
 const workboxBuild = require('workbox-build');
-// NOTE: This should be run *AFTER* all your assets are built
 const buildSW = () => {
   // This will return a Promise
   return workboxBuild.injectManifest({
-    swSrc: 'src/sw-template.js', // this is the sw template file
-    swDest: 'build/sw.js', // this will be created in the build step
+    swSrc: 'src/sw-template.js',
+    swDest: 'build/sw.js',
     globDirectory: 'build',
     globPatterns: [
-      '**/*.{js,css,html,json}', // filetypes to precache
+      // filetypes in the build folder to precache
+      '**/*.{js,css,html,json,svg,png,woff2,ico}',
     ],
   }).then(({ count, size, warnings }) => {
-    /*  Log any warnings and details - makes it easier to debug */
     warnings.forEach(console.warn);
-    console.log(`⏺  ${count} files will be precached, totaling ${size} bytes.`);
+    console.log(`⏺ ${count} files will be precached, totaling ${size} bytes.`);
   }).catch((err) => {
     console.error(`❗️❗️❗️Unable to generate a new service worker❗️❗️❗️`, err);
   });

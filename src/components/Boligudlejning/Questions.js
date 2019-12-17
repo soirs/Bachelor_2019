@@ -62,7 +62,8 @@ export default function Questions(props) {
         <Typography>
           Vælg antal måneder din bolig har haft anvendelse til udlejning i 2019:
     </Typography>
-        <Slider p={1}
+        <Slider
+          p={1}
           required
           defaultValue={userData.sliderValue || sliderValue}
           // value={sliderStateValue}

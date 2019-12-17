@@ -105,7 +105,7 @@ class SettingsDialog extends Component {
     const {
       user,
       userData,
-      theme
+      // theme
     } = this.props;
 
     // Custom Functions
