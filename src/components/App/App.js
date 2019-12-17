@@ -21,6 +21,10 @@ import DialogHost from '../DialogHost';
 import InstallPWA from "../utility/InstallPWA";
 import moment from 'moment';
 import FooterBar from '../FooterBar';
+import NewUpdateReady from '../utility/NewUpdateReady';
+import {Workbox} from 'workbox-window';
+
+const wb = new Workbox('/sw.js');
 
 class App extends Component {
   constructor(props) {
@@ -62,7 +66,8 @@ class App extends Component {
         autoHideDuration: 0,
         message: '',
         open: false
-      }
+      },
+      isServiceWorkerReady: false
     };
   }
   /* Open login/logout dialog */
@@ -196,18 +201,27 @@ class App extends Component {
       }
     });
   };
+  iOSInstaller = () => {
+    const { activateIOS } = this.state;
 
+    this.setState({ activateIOS: !activateIOS })
+  }
   /* Emit: App is updating to newest version when the controllerchange value changes from null. */
   updateReadySnackbar = () => {
+    const { isServiceWorkerReady } = this.state;
+
     if ('serviceWorker' in navigator) {
       let refreshing;
+      
       window.navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (refreshing) return;
-        // window.location.reload();
+        console.log('Live',isServiceWorkerReady)
         refreshing = true;
-        return fireUpdatePrompt();
+        this.setState({ isServiceWorkerReady: true })
+
+        // return fireUpdatePrompt();
       });
-      const fireUpdatePrompt = () => this.openSnackbar('Opdaterer til nyeste version. Venligst klik på logoet for at få den nyeste version');
+      // const fireUpdatePrompt = () => this.openSnackbar('Opdaterer til nyeste version. Venligst klik på logoet for at få den nyeste version');
     }
   }
   /* A prompt only shown on iOS devices to add the appliaction to homescreen */
@@ -273,6 +287,7 @@ class App extends Component {
     } = this.state;
 
     const { snackbar } = this.state;
+    const { isServiceWorkerReady } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -280,6 +295,8 @@ class App extends Component {
 
         {/* A2HS iOS */}
         {this.iosA2HSPrompt() && <InstallPWA />}
+        {/* Prompt when new version is available */}
+        {isServiceWorkerReady && <NewUpdateReady />}
 
         {!ready &&
           <LaunchScreen />
@@ -425,7 +442,6 @@ class App extends Component {
                 }
               }
             />
-
             <Snackbar
               autoHideDuration={snackbar.autoHideDuration}
               message={snackbar.message}
@@ -569,6 +585,16 @@ class App extends Component {
           });
         }
       });
+    });
+
+    wb.addEventListener('waiting', () => {
+      console.log('Waiting much')
+    });
+    wb.addEventListener('activated', () => {
+      console.log('activated much')
+    });
+    wb.addEventListener('installed', () => {
+      console.log('installed much')
     });
 
     console.log("Listening for Install prompt");

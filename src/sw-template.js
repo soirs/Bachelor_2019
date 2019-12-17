@@ -4,10 +4,16 @@ if ('function' === typeof importScripts) {
   importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
   if (workbox) {
-    self.addEventListener('install', event => {
-      self.skipWaiting();
+    // self.addEventListener('install', event => {
+    //   self.skipWaiting();
+    // });
+
+    self.addEventListener('message', event => {
+      if (event.data.action === 'skipWaiting') {
+        self.skipWaiting();
+      }
     });
-    
+
     workbox.precaching.precacheAndRoute([]);
 
     console.log('Success 🎉 🎉 🎉 Workbox is running');

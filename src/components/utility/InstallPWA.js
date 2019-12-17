@@ -31,7 +31,7 @@ export default function InstallPWA() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Installer Digital Revisor</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Installer Digital Revisor?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             1. Tryk på
