@@ -6,7 +6,7 @@ if ('function' === typeof importScripts) {
   if (workbox) {
     self.addEventListener('install', event => {
       self.skipWaiting();
-    });
+    }); 
     
     workbox.precaching.precacheAndRoute([]);
 

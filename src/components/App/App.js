@@ -238,19 +238,15 @@ class App extends Component {
 
   installApp = async () => {
     if (!this.installPrompt) { return false }
-    console.log("Started installing app")
+    console.log("1: Install button pressed:")
+    console.log("2: Attempting app install - Will only proceed in Chrome")
 
     this.installPrompt.prompt();
+    console.log("3: Awaiting user feedback")
 
     let outcome = await this.installPrompt.userChoice;
-    // eslint-disable-next-line eqeqeq
-    if (outcome.outcome == 'accepted') {
-      console.log("PWA setup accepted")
-    }
-    else {
-      console.log("PWA setup rejected");
-    }
-    // Remove the event reference
+    outcome.outcome == 'accepted' ? console.log(`4: PWA${outcome.outcome}`) : console.log(`4: PWA ${outcome.outcome}`)
+
     this.installPrompt = null;
   }
 
@@ -573,14 +569,8 @@ class App extends Component {
 
     console.log("Listening for Install prompt");
     window.addEventListener('beforeinstallprompt', e => {
-      // For older browsers
       e.preventDefault();
-      console.log("Install Prompt fired");
       this.installPrompt = e;
-      // See if the app is already installed, in that case, do nothing.
-      if ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true) {
-        return false;
-      }
     })
 
     this.updateReadySnackbar();
