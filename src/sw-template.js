@@ -7,12 +7,15 @@ if ('function' === typeof importScripts) {
     // self.addEventListener('install', event => {
     //   self.skipWaiting();
     // });
-
     self.addEventListener('message', event => {
       if (event.data.action === 'skipWaiting') {
+        console.warn(event.data.action)
+        console.warn(' SKIPWAITING SW ')
         self.skipWaiting();
+        workbox.clientsClaim();
       }
     });
+
 
     workbox.precaching.precacheAndRoute([]);
 

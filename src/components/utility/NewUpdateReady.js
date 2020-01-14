@@ -25,8 +25,20 @@ export default function NewUpdateReady() {
     }
     setOpen(false);
   };
+
   const handleReload = () => {
-    window.postMessage({ action: 'skipWaiting' });
+    navigator.serviceWorker.controller.postMessage({ action: 'skipWaiting' })
+    // window.postMessage({ action: 'skipWaiting' });
+    console.error('pre REload')
+    window.addEventListener('message', event => {
+      
+      if (event.data.action === 'skipWaiting') {
+        console.log('', event.data)
+        console.log('-->', event.data.action)
+        console.log('->', event)
+      }
+
+    })
     window.location.reload()
   }
 
@@ -38,12 +50,7 @@ export default function NewUpdateReady() {
 
   return (
     <Snackbar
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}
       open={open}
-      autoHideDuration={6000}
       onClose={handleClose}
       ContentProps={{
         'aria-describedby': 'message-id',

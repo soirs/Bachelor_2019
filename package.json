@@ -29,12 +29,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw && firebase deploy",
+    "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "react-scripts build"
+    "predeploy": "react-scripts build",
+    "serve": "serve -l 8000 -s build"
   },
   "eslintConfig": {
     "extends": "react-app"
