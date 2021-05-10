@@ -10,7 +10,7 @@
     "@unicef/material-ui-currency-textfield": "^0.8.4",
     "classnames": "^2.2.6",
     "firebase": "^7.5.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "material-survey": "^1.0.34",
     "mdi-material-ui": "^6.9.0",
